@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { GraduationCap, BookOpen, ChevronRight, Building2, Award } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { GraduationCap, BookOpen, ChevronRight, Building2, Award, Sparkles, CheckCircle2 } from 'lucide-react';
 import { personalDetails } from '../data/portfolioData';
 
 export default function Education() {
@@ -8,7 +8,7 @@ export default function Education() {
   const edu = personalDetails.education;
 
   return (
-    <section id="education" className="py-24 md:py-36 bg-apple-surface relative border-y border-black/[0.06]">
+    <section id="education" className="py-24 md:py-36 bg-apple-surface relative border-y border-black/[0.06] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
@@ -16,7 +16,7 @@ export default function Education() {
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-xs uppercase tracking-widest font-semibold text-apple-subtle block mb-3"
+            className="text-xs uppercase tracking-widest font-bold text-apple-accent block mb-3"
           >
             EDUCATION & QUALIFICATIONS
           </motion.span>
@@ -27,81 +27,101 @@ export default function Education() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-apple-dark tracking-tight leading-[1.12] font-display"
           >
-            {edu.headline}
+            Building a strong foundation in technology.
           </motion.h2>
         </div>
 
-        {/* Qualifications Stack - Apple Product Specification Cards */}
-        <div className="space-y-6 mb-16">
+        {/* Qualifications Tile Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {edu.qualifications.map((q, idx) => (
             <motion.div
               key={q.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="bg-white rounded-3xl p-8 sm:p-10 border border-black/[0.08] shadow-apple-md hover:shadow-apple-lg transition-all"
+              whileHover={{ y: -6, scale: 1.01 }}
+              transition={{ duration: 0.4, delay: idx * 0.08 }}
+              className="bg-white rounded-3xl p-6 sm:p-7 border border-black/[0.08] shadow-apple-sm hover:shadow-apple-md transition-all duration-300 flex flex-col justify-between group overflow-hidden relative"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                <div className="lg:col-span-8 flex items-start gap-5">
-                  <div className="w-14 h-14 rounded-full bg-white border border-black/[0.1] shadow-apple-sm p-1.5 shrink-0 flex items-center justify-center overflow-hidden">
+              <div>
+                {/* Top Row: Logo & Status Badge */}
+                <div className="flex items-center justify-between gap-3 mb-5">
+                  <div className="w-12 h-12 rounded-2xl bg-apple-surface border border-black/[0.08] p-1.5 shrink-0 flex items-center justify-center overflow-hidden shadow-xs group-hover:scale-105 transition-transform duration-300">
                     <img
                       src={q.logoUrl}
                       alt={q.institution}
-                      className="w-full h-full object-contain rounded-full"
+                      className="w-full h-full object-contain rounded-xl"
                     />
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${
-                        q.status === 'Undergraduate'
-                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                          : 'bg-blue-50 text-blue-700 border-blue-200'
-                      }`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${q.status === 'Undergraduate' ? 'bg-emerald-500' : 'bg-blue-500'}`} />
-                        {q.status}
-                      </span>
-                      <span className="px-2.5 py-1 rounded-full text-[11px] font-mono text-apple-subtle bg-black/[0.04]">
-                        {q.badge}
-                      </span>
-                    </div>
 
-                    <h3 className="text-2xl sm:text-3xl font-extrabold text-apple-dark font-display leading-tight">
-                      {q.degree}
-                    </h3>
-                    <p className="text-base sm:text-lg text-apple-dark font-semibold mt-1 flex items-center gap-2">
-                      <Building2 className="w-4 h-4 text-apple-accent" />
-                      <span>{q.institution}</span>
-                      <span className="text-apple-subtle font-normal">• {q.subText}</span>
-                    </p>
+                  <div className="flex items-center gap-2">
+                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold border ${
+                      q.status === 'Undergraduate'
+                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                        : 'bg-blue-50 text-blue-700 border-blue-200'
+                    }`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${q.status === 'Undergraduate' ? 'bg-emerald-500 animate-pulse' : 'bg-blue-500'}`} />
+                      {q.status}
+                    </span>
                   </div>
                 </div>
 
-                <div className="lg:col-span-4 flex lg:justify-end">
-                  <div className="p-5 rounded-2xl bg-apple-surface border border-black/[0.06] text-left lg:text-right w-full lg:w-auto">
-                    <span className="text-xs uppercase tracking-wider text-apple-subtle font-semibold block mb-1">
-                      Academic Scope
-                    </span>
-                    <span className="text-xs sm:text-sm text-apple-dark font-medium leading-relaxed block">
-                      {q.focus}
-                    </span>
-                  </div>
+                {/* Qualification Title & Institution */}
+                <span className="text-[11px] font-mono font-semibold text-apple-subtle uppercase tracking-wider block mb-1">
+                  {q.badge}
+                </span>
+                <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-display leading-tight group-hover:text-apple-accent transition-colors duration-300">
+                  {q.degree}
+                </h3>
+
+                <p className="text-xs sm:text-sm font-semibold text-slate-700 mt-2 flex items-center gap-1.5">
+                  <Building2 className="w-4 h-4 text-slate-400 shrink-0" />
+                  <span>{q.institution}</span>
+                </p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5 pl-5">
+                  {q.subText}
+                </p>
+              </div>
+
+              {/* Bottom Academic Scope Card Tile */}
+              <div className="mt-6 pt-4 border-t border-black/[0.06]">
+                <div className="p-3.5 rounded-2xl bg-apple-surface border border-black/[0.04]">
+                  <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold block mb-1">
+                    Academic Scope
+                  </span>
+                  <p className="text-xs text-slate-700 font-medium leading-relaxed">
+                    {q.focus}
+                  </p>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Minimal Specification Rows for Core Coursework */}
-        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-black/[0.08] shadow-apple-md">
+        {/* Core Coursework Specification Tiles */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="bg-white rounded-3xl p-6 sm:p-10 border border-black/[0.08] shadow-apple-sm"
+        >
           <div className="flex items-center justify-between mb-6 pb-4 border-b border-black/[0.08]">
-            <h4 className="text-xs uppercase tracking-widest font-bold text-apple-subtle">
-              Core Academic Focus Areas & Coursework
-            </h4>
-            <span className="text-xs text-apple-subtle">Click to view course detail</span>
+            <div>
+              <span className="text-[11px] uppercase tracking-widest font-bold text-apple-accent block">
+                SPECIALIZED MODULES
+              </span>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-display mt-0.5">
+                Core Academic Focus Areas & Coursework
+              </h3>
+            </div>
+            <span className="hidden sm:inline-block text-xs font-semibold text-slate-500">
+              Interactive Modules
+            </span>
           </div>
 
-          <div className="divide-y divide-black/[0.06]">
+          {/* Module Tile Items with Transitions */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {edu.relevantAreas.map((area, idx) => {
               const isExpanded = expandedArea === area.id;
               return (
@@ -110,48 +130,44 @@ export default function Education() {
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.06 }}
+                  whileHover={{ y: -2 }}
+                  transition={{ delay: idx * 0.05 }}
                   onClick={() => setExpandedArea(isExpanded ? null : area.id)}
-                  className="py-5 cursor-pointer group transition-colors hover:bg-apple-surface/40 px-3 rounded-xl"
+                  className="p-5 rounded-2xl bg-apple-surface border border-black/[0.06] hover:bg-slate-100 hover:border-black/[0.1] transition-all duration-300 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <span className="font-mono text-xs text-apple-subtle w-6 font-semibold">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-slate-900 border border-black/[0.06] font-mono text-xs font-bold shadow-xs group-hover:bg-slate-900 group-hover:text-white transition-colors">
                         0{idx + 1}
-                      </span>
-                      <span className="text-lg sm:text-xl font-bold text-apple-dark group-hover:text-apple-accent transition-colors font-display">
+                      </div>
+                      <h4 className="text-base font-bold text-slate-900 font-display group-hover:text-apple-accent transition-colors">
                         {area.title}
-                      </span>
+                      </h4>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                      <span className="hidden sm:inline-block text-xs font-medium text-apple-subtle">
-                        Academic Module
-                      </span>
-                      <div className={`p-1.5 rounded-full bg-apple-surface text-apple-dark group-hover:bg-apple-dark group-hover:text-white transition-all transform ${isExpanded ? 'rotate-90' : ''}`}>
-                        <ChevronRight className="w-4 h-4" />
-                      </div>
+                    <div className={`p-1.5 rounded-full bg-white text-slate-700 shadow-xs border border-black/[0.06] transition-transform duration-300 ${isExpanded ? 'rotate-90 text-apple-accent' : ''}`}>
+                      <ChevronRight className="w-4 h-4" />
                     </div>
                   </div>
 
-                  {/* Expandable Details */}
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="mt-3 ml-10 text-sm text-apple-subtle leading-relaxed pr-4"
-                    >
-                      <div className="p-4 rounded-xl bg-apple-surface border border-black/[0.04] text-apple-dark font-medium">
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="mt-3 pt-3 border-t border-black/[0.06] text-xs text-slate-600 leading-relaxed font-medium"
+                      >
                         {area.desc}
-                      </div>
-                    </motion.div>
-                  )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
               );
             })}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
