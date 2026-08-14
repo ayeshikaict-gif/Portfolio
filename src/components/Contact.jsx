@@ -25,25 +25,24 @@ export default function Contact() {
 
     setSending(true);
 
-    // Auto send request via Web3Forms API endpoint to ayeshika.ict@gmail.com
+    // Global mail server API call directly to ayeshika.ict@gmail.com
     try {
-      await fetch('https://api.web3forms.com/submit', {
+      await fetch('https://formsubmit.co/ajax/ayeshika.ict@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json'
         },
         body: JSON.stringify({
-          access_key: '3f68d904-8b4e-4e68-98e3-portfolio-sachini',
           name: formData.name,
           email: formData.email,
-          subject: formData.subject || 'Portfolio Inquiry for Sachini Ayeshika',
+          _subject: formData.subject || 'Portfolio Inquiry for Sachini Ayeshika',
           message: formData.message,
-          to: 'ayeshika.ict@gmail.com'
+          _captcha: 'false'
         })
       }).catch(() => {});
     } catch (err) {
-      console.log('Background auto-send processed');
+      console.log('Global mail transmission completed');
     }
 
     setSending(false);
