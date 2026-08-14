@@ -8,11 +8,7 @@ export default function Education() {
   const edu = personalDetails.education;
 
   return (
-    <section id="education" className="py-24 md:py-36 bg-[#090d16] text-white relative border-y border-slate-800/80 overflow-hidden">
-      {/* Background Subtle Gradient Halos */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-
+    <section id="education" className="py-24 md:py-36 bg-apple-surface relative border-y border-black/[0.06] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
@@ -20,7 +16,7 @@ export default function Education() {
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-xs uppercase tracking-widest font-bold text-sky-400 block mb-3"
+            className="text-xs uppercase tracking-widest font-bold text-slate-600 block mb-3"
           >
             EDUCATION & QUALIFICATIONS
           </motion.span>
@@ -29,13 +25,13 @@ export default function Education() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.12] font-display"
+            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.12] font-display"
           >
             Building a strong foundation in technology.
           </motion.h2>
         </div>
 
-        {/* Dark Accent Spec Cards Grid */}
+        {/* Clean White Spec Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {edu.qualifications.map((q, idx) => (
             <motion.div
@@ -43,17 +39,14 @@ export default function Education() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              whileHover={{ y: -6, scale: 1.015 }}
-              transition={{ duration: 0.4, delay: idx * 0.08 }}
-              className="bg-[#0f172a] rounded-3xl p-7 border border-slate-800 shadow-xl hover:border-slate-700 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
+              whileHover={{ y: -6, scale: 1.01 }}
+              transition={{ duration: 0.3, delay: idx * 0.08 }}
+              className="bg-white rounded-3xl p-7 border border-black/[0.08] shadow-apple-sm hover:shadow-apple-md transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
             >
-              {/* Subtle Card Glow */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/5 rounded-full blur-2xl group-hover:bg-sky-500/15 transition-all duration-500 pointer-events-none" />
-
               <div>
                 {/* Top Row: Logo & Status Badge */}
                 <div className="flex items-center justify-between gap-3 mb-5">
-                  <div className="w-12 h-12 rounded-2xl bg-white p-1.5 shrink-0 flex items-center justify-center overflow-hidden shadow-md group-hover:scale-105 transition-transform duration-300">
+                  <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-black/[0.08] p-1.5 shrink-0 flex items-center justify-center overflow-hidden shadow-xs group-hover:scale-105 transition-transform duration-300">
                     <img
                       src={q.logoUrl}
                       alt={q.institution}
@@ -63,41 +56,41 @@ export default function Education() {
 
                   <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold border ${
                     q.status === 'Undergraduate'
-                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
-                      : 'bg-sky-500/10 text-sky-400 border-sky-500/30'
+                      ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                      : 'bg-slate-100 text-slate-800 border-slate-200'
                   }`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${q.status === 'Undergraduate' ? 'bg-emerald-400 animate-pulse' : 'bg-sky-400'}`} />
+                    <span className={`w-1.5 h-1.5 rounded-full ${q.status === 'Undergraduate' ? 'bg-emerald-500 animate-pulse' : 'bg-slate-500'}`} />
                     {q.status}
                   </span>
                 </div>
 
                 {/* Badge Period */}
-                <span className="text-[11px] font-mono font-bold text-sky-400 uppercase tracking-wider block mb-1">
+                <span className="inline-block px-2.5 py-1 rounded-full text-[11px] font-mono font-bold text-slate-600 bg-slate-100 border border-black/[0.04] mb-3">
                   {q.badge}
                 </span>
 
                 {/* Qualification Title */}
-                <h3 className="text-xl sm:text-2xl font-extrabold text-white font-display leading-tight group-hover:text-sky-300 transition-colors duration-300">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-display leading-tight group-hover:text-slate-700 transition-colors duration-300">
                   {q.degree}
                 </h3>
 
                 {/* Institution Name */}
-                <p className="text-xs sm:text-sm font-semibold text-slate-300 mt-2 flex items-center gap-1.5">
-                  <Building2 className="w-4 h-4 text-sky-400 shrink-0" />
+                <p className="text-xs sm:text-sm font-bold text-slate-800 mt-2 flex items-center gap-1.5">
+                  <Building2 className="w-4 h-4 text-slate-500 shrink-0" />
                   <span>{q.institution}</span>
                 </p>
-                <p className="text-xs text-slate-400 font-medium mt-0.5 pl-5">
+                <p className="text-xs text-slate-500 font-medium mt-0.5 pl-5">
                   {q.subText}
                 </p>
               </div>
 
               {/* Bottom Academic Scope Card */}
-              <div className="mt-6 pt-4 border-t border-slate-800/80">
-                <div className="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800/80">
-                  <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold block mb-1">
+              <div className="mt-6 pt-4 border-t border-black/[0.06]">
+                <div className="p-3.5 rounded-2xl bg-slate-50 border border-black/[0.04]">
+                  <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold block mb-1">
                     Academic Scope
                   </span>
-                  <p className="text-xs text-slate-200 font-medium leading-relaxed">
+                  <p className="text-xs text-slate-700 font-medium leading-relaxed">
                     {q.focus}
                   </p>
                 </div>
@@ -112,18 +105,18 @@ export default function Education() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-[#0f172a] rounded-3xl p-6 sm:p-10 border border-slate-800 shadow-xl"
+          className="bg-white rounded-3xl p-6 sm:p-10 border border-black/[0.08] shadow-apple-sm"
         >
-          <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+          <div className="flex items-center justify-between mb-6 pb-4 border-b border-black/[0.08]">
             <div>
-              <span className="text-[11px] uppercase tracking-widest font-bold text-sky-400 block">
+              <span className="text-[11px] uppercase tracking-widest font-bold text-slate-500 block">
                 SPECIALIZED MODULES
               </span>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-white font-display mt-0.5">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 font-display mt-0.5">
                 Core Academic Focus Areas & Coursework
               </h3>
             </div>
-            <span className="hidden sm:inline-block text-xs font-semibold text-slate-400">
+            <span className="hidden sm:inline-block text-xs font-semibold text-slate-500">
               Interactive Modules
             </span>
           </div>
@@ -141,19 +134,19 @@ export default function Education() {
                   whileHover={{ y: -2 }}
                   transition={{ delay: idx * 0.05 }}
                   onClick={() => setExpandedArea(isExpanded ? null : area.id)}
-                  className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800/80 hover:border-slate-700 hover:bg-slate-900 transition-all duration-300 cursor-pointer group"
+                  className="p-5 rounded-2xl bg-slate-50 border border-black/[0.06] hover:bg-slate-100 hover:border-black/[0.1] transition-all duration-300 cursor-pointer group"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center text-sky-400 font-mono text-xs font-bold border border-slate-700 shadow-xs group-hover:bg-sky-500 group-hover:text-white transition-colors">
+                      <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-slate-900 font-mono text-xs font-bold border border-black/[0.08] shadow-xs group-hover:bg-slate-900 group-hover:text-white transition-colors">
                         0{idx + 1}
                       </div>
-                      <h4 className="text-base font-bold text-white font-display group-hover:text-sky-300 transition-colors">
+                      <h4 className="text-base font-bold text-slate-900 font-display group-hover:text-black transition-colors">
                         {area.title}
                       </h4>
                     </div>
 
-                    <div className={`p-1.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 transition-transform duration-300 ${isExpanded ? 'rotate-90 text-sky-400' : ''}`}>
+                    <div className={`p-1.5 rounded-full bg-white text-slate-700 border border-black/[0.06] transition-transform duration-300 ${isExpanded ? 'rotate-90 text-slate-900' : ''}`}>
                       <ChevronRight className="w-4 h-4" />
                     </div>
                   </div>
@@ -165,7 +158,7 @@ export default function Education() {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-300 leading-relaxed font-medium"
+                        className="mt-3 pt-3 border-t border-black/[0.06] text-xs text-slate-600 leading-relaxed font-medium"
                       >
                         {area.desc}
                       </motion.div>
