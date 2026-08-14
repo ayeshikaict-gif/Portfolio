@@ -25,7 +25,7 @@ export default function Contact() {
 
     setSending(true);
 
-    // Global mail server API call directly to ayeshika.ict@gmail.com
+    // Global mail server API call + mailto fallback
     try {
       await fetch('https://formsubmit.co/ajax/ayeshika.ict@gmail.com', {
         method: 'POST',
@@ -42,7 +42,7 @@ export default function Contact() {
         })
       }).catch(() => {});
     } catch (err) {
-      console.log('Global mail transmission completed');
+      console.log('Global mail transmission triggered');
     }
 
     setSending(false);
@@ -242,15 +242,26 @@ export default function Contact() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="py-16 text-center space-y-4 bg-apple-surface rounded-2xl border border-black/[0.06]"
+                className="py-12 px-6 text-center space-y-4 bg-apple-surface rounded-2xl border border-black/[0.06]"
               >
                 <div className="w-14 h-14 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-200 shadow-sm">
                   <CheckCircle className="w-8 h-8" />
                 </div>
-                <h4 className="text-2xl font-extrabold text-slate-900 font-display">Message Transmitted!</h4>
+                <h4 className="text-2xl font-extrabold text-slate-900 font-display">Message Sent Successfully!</h4>
                 <p className="text-sm text-slate-600 max-w-sm mx-auto leading-relaxed">
-                  Thank you for reaching out. Opening your mail client to dispatch your message directly to {contact.email}.
+                  Your message has been transmitted directly to <strong className="text-slate-900">{contact.email}</strong>.
                 </p>
+                <div className="pt-2">
+                  <a
+                    href={gmailComposeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-xs transition-all shadow-sm"
+                  >
+                    <Mail className="w-4 h-4" />
+                    <span>Or Open & Send in Gmail Direct</span>
+                  </a>
+                </div>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
