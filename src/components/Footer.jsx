@@ -53,6 +53,15 @@ export default function Footer() {
                 {link.label}
               </a>
             ))}
+            <a
+              href="/resume/Sachini-Ayeshika-CV.pdf"
+              download="Sachini-Ayeshika-CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-1 rounded-full bg-slate-900 text-white text-[11px] hover:bg-black transition-colors"
+            >
+              Download CV ↓
+            </a>
           </div>
         </div>
 

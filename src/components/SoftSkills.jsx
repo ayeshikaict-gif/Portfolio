@@ -37,26 +37,35 @@ export default function SoftSkills() {
           </motion.h2>
         </div>
 
-        {/* Kinetic Word & Attribute Cloud */}
-        <div className="flex flex-wrap gap-4 sm:gap-6">
-          {softSkillsData.map((skill, idx) => {
-            const Icon = iconMap[skill] || Sparkles;
+        {/* Kinetic Grid of Interpersonal Attributes */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {softSkillsData.map((skillItem, idx) => {
+            const skillName = typeof skillItem === 'string' ? skillItem : skillItem.name;
+            const skillDesc = typeof skillItem === 'object' ? skillItem.desc : '';
+            const Icon = iconMap[skillName] || Sparkles;
             return (
               <motion.div
-                key={skill}
+                key={skillName}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                whileHover={{ scale: 1.04, y: -4 }}
-                className="group flex items-center gap-3 px-6 py-4 rounded-2xl bg-white border border-black/[0.08] shadow-apple-sm hover:shadow-apple-md hover:border-black/20 transition-all duration-300 cursor-default"
+                transition={{ duration: 0.5, delay: idx * 0.05 }}
+                whileHover={{ scale: 1.02, y: -4 }}
+                className="group flex flex-col justify-between p-6 rounded-2xl bg-white border border-black/[0.08] shadow-apple-sm hover:shadow-apple-md hover:border-black/20 transition-all duration-300 cursor-default"
               >
-                <div className="w-8 h-8 rounded-xl bg-apple-surface group-hover:bg-apple-dark group-hover:text-white flex items-center justify-center transition-colors">
-                  <Icon className="w-4 h-4 text-apple-dark group-hover:text-white transition-colors" />
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-9 h-9 rounded-xl bg-apple-surface group-hover:bg-apple-dark group-hover:text-white flex items-center justify-center transition-colors shrink-0">
+                    <Icon className="w-4.5 h-4.5 text-apple-dark group-hover:text-white transition-colors" />
+                  </div>
+                  <span className="text-lg font-bold text-apple-dark font-display">
+                    {skillName}
+                  </span>
                 </div>
-                <span className="text-lg sm:text-xl font-bold text-apple-dark font-display">
-                  {skill}
-                </span>
+                {skillDesc && (
+                  <p className="text-xs text-apple-subtle leading-relaxed mt-1">
+                    {skillDesc}
+                  </p>
+                )}
               </motion.div>
             );
           })}

@@ -1,19 +1,38 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Code2, Globe, Cpu, Wrench, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Code2, Globe, Cpu, Wrench, Database, Box, Palette, CheckCircle2, Sparkles, Layers } from 'lucide-react';
 import { skillsData } from '../data/portfolioData';
 
 const categoryIcons = {
+  all: Sparkles,
   languages: Code2,
   web: Globe,
+  frameworks: Box,
+  database: Database,
   engineering: Cpu,
+  design: Palette,
   tools: Wrench
 };
 
 export default function TechnicalSkills() {
-  const [activeCategory, setActiveCategory] = useState(skillsData.categories[0].id);
+  const [activeCategory, setActiveCategory] = useState('all');
 
-  const currentCategoryObj = skillsData.categories.find(c => c.id === activeCategory);
+  // Prepare categories list with 'All' at the start
+  const categoriesList = [
+    {
+      id: 'all',
+      title: 'All Technologies',
+      description: 'A comprehensive suite of modern web engineering stack, programming paradigms, databases, software practices, and UI/UX design tools.',
+    },
+    ...skillsData.categories
+  ];
+
+  const currentCategoryObj = categoriesList.find(c => c.id === activeCategory) || categoriesList[0];
+
+  // Get skills to display: either all skills flattened or category-specific skills
+  const skillsToDisplay = activeCategory === 'all'
+    ? skillsData.categories.flatMap(c => c.skills.map(s => ({ ...s, categoryTitle: c.title })))
+    : (currentCategoryObj.skills || []);
 
   return (
     <section id="skills" className="py-24 md:py-36 bg-apple-bg relative overflow-hidden">
@@ -50,8 +69,8 @@ export default function TechnicalSkills() {
 
         {/* Category Tabs Bar */}
         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-4 mb-12 border-b border-black/[0.06]">
-          {skillsData.categories.map((cat) => {
-            const Icon = categoryIcons[cat.id] || Code2;
+          {categoriesList.map((cat) => {
+            const Icon = categoryIcons[cat.id] || Layers;
             const isActive = activeCategory === cat.id;
 
             return (
@@ -71,7 +90,7 @@ export default function TechnicalSkills() {
           })}
         </div>
 
-        {/* Active Category Display */}
+        {/* List-Type Display */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
@@ -79,54 +98,60 @@ export default function TechnicalSkills() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.4 }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+            className="space-y-6"
           >
-            {/* Left Description Panel */}
-            <div className="lg:col-span-4 p-8 rounded-3xl bg-apple-surface border border-black/[0.06]">
-              <span className="text-xs uppercase tracking-widest font-bold text-apple-accent block mb-2">
-                Category Specification
-              </span>
-              <h3 className="text-2xl font-bold text-apple-dark mb-3 font-display">
-                {currentCategoryObj.title}
-              </h3>
-              <p className="text-sm text-apple-subtle leading-relaxed mb-6">
-                {currentCategoryObj.description}
-              </p>
-              <div className="pt-4 border-t border-black/[0.06] flex items-center justify-between text-xs text-apple-subtle">
-                <span>{currentCategoryObj.skills.length} Technical Units</span>
-                <span className="font-mono">Updated 2026</span>
-              </div>
-            </div>
+            {(activeCategory === 'all'
+              ? skillsData.categories
+              : skillsData.categories.filter(c => c.id === activeCategory)
+            ).map((category, catIdx) => {
+              const Icon = categoryIcons[category.id] || Layers;
 
-            {/* Right Interactive Skill Chips Grid */}
-            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {currentCategoryObj.skills.map((skill, index) => (
+              return (
                 <motion.div
-                  key={skill.name}
+                  key={category.id}
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.06 }}
-                  className="p-6 rounded-2xl bg-white border border-black/[0.08] shadow-apple-sm hover:shadow-apple-md hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: catIdx * 0.05 }}
+                  className="bg-white rounded-3xl p-6 sm:p-8 border border-black/[0.08] shadow-apple-sm hover:shadow-apple-md transition-all"
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <h4 className="text-lg font-bold text-apple-dark group-hover:text-apple-accent transition-colors font-display">
-                      {skill.name}
-                    </h4>
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-black/[0.04] text-apple-subtle">
-                      {skill.tag}
-                    </span>
-                  </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    {/* Category Title & Icon */}
+                    <div className="lg:col-span-4 flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-apple-surface flex items-center justify-center text-apple-dark shrink-0 border border-black/[0.04]">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-apple-dark font-display">
+                          {category.title}
+                        </h3>
+                        <p className="text-xs text-apple-subtle leading-relaxed mt-1">
+                          {category.description}
+                        </p>
+                      </div>
+                    </div>
 
-                  <div className="flex items-center gap-2 text-xs text-apple-subtle font-medium">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                    <span>{skill.type}</span>
+                    {/* Skills Compact List Grid */}
+                    <div className="lg:col-span-8 flex flex-wrap gap-2.5">
+                      {category.skills.map((skill) => (
+                        <div
+                          key={skill.name}
+                          className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-apple-surface border border-black/[0.06] hover:bg-white hover:shadow-apple-sm hover:border-black/10 transition-all group"
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                          <span className="text-sm font-semibold text-apple-dark group-hover:text-apple-accent transition-colors font-display">
+                            {skill.name}
+                          </span>
+                          <span className="text-[10px] font-medium px-2 py-0.5 rounded-md bg-black/[0.04] text-apple-subtle font-mono">
+                            {skill.tag}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-
-                  {/* Subtle hover gradient bar at bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-apple-accent to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </motion.div>
-              ))}
-            </div>
+              );
+            })}
           </motion.div>
         </AnimatePresence>
       </div>

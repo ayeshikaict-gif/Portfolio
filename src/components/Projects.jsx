@@ -18,7 +18,7 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeFilter, setActiveFilter] = useState('All');
 
-  const categories = ['All', 'Web Application', 'E-Commerce', 'Software Engineering', 'Full-Stack App', 'Python & Data'];
+  const categories = ['All', 'WEB', 'FULL-STACK', 'DESKTOP', 'UI/UX'];
 
   const filteredProjects = activeFilter === 'All'
     ? projectsData
@@ -83,8 +83,9 @@ export default function Projects() {
                   initial={{ opacity: 0, scale: 0.95, y: 20 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                  transition={{ duration: 0.4, delay: idx * 0.05 }}
-                  className="group relative rounded-2xl bg-white border border-black/[0.08] p-4 sm:p-5 shadow-apple-sm hover:shadow-apple-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden"
+                  whileHover={{ y: -6, scale: 1.01 }}
+                  transition={{ duration: 0.3 }}
+                  className="group relative rounded-2xl bg-white border border-black/[0.08] p-4 sm:p-5 shadow-apple-sm hover:shadow-apple-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
                 >
                   <div>
                     {/* Project Image Header Tile */}

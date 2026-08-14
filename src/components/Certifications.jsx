@@ -48,7 +48,8 @@ export default function Certifications() {
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.06 }}
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.2 }}
                   onClick={() => setActiveCert(isExpanded ? null : cert.id)}
                   className="py-6 group cursor-pointer transition-all duration-300 px-4 rounded-2xl hover:bg-white hover:shadow-apple-sm"
                 >

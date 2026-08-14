@@ -62,9 +62,15 @@ export default function Navbar({ onOpenContactModal }) {
           <a
             href="#hero"
             onClick={(e) => handleNavClick(e, '#hero')}
-            className="group flex items-center gap-2.5 text-apple-dark font-semibold tracking-tight text-lg sm:text-xl transition-all"
+            className="group flex items-center gap-2.5 text-apple-dark font-semibold tracking-tight text-sm sm:text-base transition-all"
           >
-            <span className="w-2.5 h-2.5 rounded-full bg-apple-dark group-hover:bg-apple-accent group-hover:scale-125 transition-all duration-300" />
+            <div className="w-8 h-8 rounded-full overflow-hidden border border-black/10 shadow-xs shrink-0 bg-slate-100 group-hover:scale-105 transition-transform duration-300">
+              <img
+                src="/profile.png"
+                alt={personalDetails.name}
+                className="w-full h-full object-cover object-center"
+              />
+            </div>
             <span className="font-display font-bold">{personalDetails.name}</span>
           </a>
 

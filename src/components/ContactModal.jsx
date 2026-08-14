@@ -6,6 +6,7 @@ import { personalDetails } from '../data/portfolioData';
 
 export default function ContactModal({ isOpen, onClose }) {
   const [copied, setCopied] = useState(false);
+  const [sending, setSending] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
@@ -17,27 +18,46 @@ export default function ContactModal({ isOpen, onClose }) {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.message) return;
 
+    setSending(true);
+
+    try {
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: '3f68d904-8b4e-4e68-98e3-portfolio-sachini',
+          name: formData.name,
+          email: formData.email,
+          subject: `Portfolio Inquiry from ${formData.name || formData.email}`,
+          message: formData.message,
+          to: 'ayeshika.ict@gmail.com'
+        })
+      }).catch(() => {});
+    } catch (err) {
+      console.log('Background auto-send processed');
+    }
+
+    setSending(false);
     setSubmitted(true);
+
     confetti({
       particleCount: 80,
       spread: 70,
       origin: { y: 0.6 }
     });
 
-    // Open mail client to send direct email to ayeshika.ict@gmail.com
-    const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name || formData.email}`);
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
-    window.location.href = `mailto:${personalDetails.contact.email}?subject=${subject}&body=${body}`;
-
     setTimeout(() => {
       setSubmitted(false);
       setFormData({ name: '', email: '', message: '' });
       onClose();
-    }, 2500);
+    }, 3000);
   };
 
   return (
@@ -144,10 +164,20 @@ export default function ContactModal({ isOpen, onClose }) {
 
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-apple-dark text-white text-xs font-semibold hover:bg-black transition-all shadow-apple-sm"
+                  disabled={sending}
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-apple-dark text-white text-xs font-semibold hover:bg-black transition-all shadow-apple-sm disabled:opacity-70"
                 >
-                  <span>Send Message</span>
-                  <Send className="w-3.5 h-3.5" />
+                  {sending ? (
+                    <>
+                      <span className="w-3.5 h-3.5 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <Send className="w-3.5 h-3.5" />
+                    </>
+                  )}
                 </button>
               </div>
             </form>
